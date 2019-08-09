@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>购物车示例</title>
+		<link rel="stylesheet" href="../css/style.css" />
+	</head>
+	<body>
+		<!--v-cloak会在vue实例结束编译时从绑定的HTML元素上移出。-->
+		<div id="app" v-cloak>
+			<template v-if="list.length">
+				<table v-for="(item,index) in list" width="600">
+					<thead>
+						<tr>
+							<th><input type="checkbox" :checked="item.isCheckType" @click="isSelectType(index)" /></th>
+							<th colspan="5">{{item.name}}</th>
+						</tr>
+						<tr>
+							<th></th>
+							<th>选择</th>
+							<th>商品名称</th>
+							<th>商品单价</th>
+							<th>购买数量</th>
+							<th>操作</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr v-for="(subitem,subindex) in item.list" >
+							<td></td>
+							<td><input type="checkbox" :checked="subitem.isCheck" @click="isSelectGoods(index,subindex)" /></td>
+							<td>{{subitem.name}}</td>
+							<td>{{subitem.price}}</td>
+							<td>
+								<button
+									@click="handleReduce(index,subindex)"
+									:disabled="subitem.count===1">-</button>
+								{{subitem.count}}
+								<button @click="handleAdd(index,subindex)">+</button>
+							</td>
+							<td>
+								<button @click="handleRemove(index,subindex)">移除</button>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				全选<input type="checkbox" :checked="isCheckAll" @click="isSelectAll()" />
+				<div>总价：￥{{totalPrice}}</div>	
+			</template>
+			<div v-else>购物车为空</div>
+		</div>
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/index.js" ></script>
+		<!--
+			这里将vue.min.js和index.js文件写在<body>的最底部，是因为：如果写在<head>里，vue实例将无法创建，
+			因为此时DOM还没有被解析完成，除非通过异步或在事件DOMContentLoaded（IE是onreadystatechange）
+			触发时再创建vue实例，这有点像jQurey的$(document).ready()方法。
+		-->
+		<br /><br />
+		<p>
+			<b>练习一：</b>在当前示例的基础上扩展商品列表，新增一项是否选中该商品的功能，总价变为只计算选中商品的总价
+			同时提供一个全选的按钮。
+		</p>
+		<p>
+			<b>思路：</b>
+			<ol>
+				<li>添加input元素，为其属性checked赋予动态变量，变量可在商品属性中增加一个值加以判断.</li>
+				<li>通过判断checked属性的值，确定是否添加计算到总价.</li>
+				<li>全选：也是通过添加input元素和判断checked属性，不同的是，增加其与物品的联系。</li>
+				<li>全选思考：首先是点击全选本身，很容易关联到所有商品的checked属性，在isSelectAll函数中去判断；<br />
+					其二，是当所有商品全部勾选时，全选需要自动勾选，此处可以在商品的点击函数中去设置判断条件；<br />
+					其三，全选勾选后，当有一商品取消勾选，全选需自动取消勾选，此处跟其二想法类似。<br />
+					其二、其三这两点均在isSelectGoods函数中修改.</li>
+			</ol>
+		</p>
+		<p>
+			<b>练习二：</b>将商品列表list改为一个二维数组来实现商品的分类，比如可分为“电子产品”“生活用品”和“果蔬”，
+			同类商品聚合在一起。提示，你可能会用到两次v-for。
+		</p>
+		<p>
+			<b>思路：</b>
+			<ol>
+				<li>渲染层面:由于我使用的是table,所以我是通过v-bind渲染三个表格table.这里,由于采用的是二维数组存储,需要嵌套
+				两层v-for,具体用法百度或者看代码.</li>
+				<li>数据层面:data中采用对象的二维数组形式存储.</li>
+				<li>js部分:对比与练习一,此处的对于全选方面多了分类和总体的判断.在移除方面,多了一层删除.
+					<ul>
+						<li>全选方面和练习一一样,一样在isSelectAll函数中进行判断.</li>
+						<li>除了全部商品的全选,还有分类的全选,其思路和总体全选差不多,在isSelectType函数中进行判断.</li>
+						<li>所以,在单个商品的勾选中,在判断全选的范围需要有分类和总体的判断,但其实总体的判断是通过分类判断,在isSelectGoods函数中有介绍.</li>
+						<li>在移除方面,由于是二维数组,增加了多一层判断,通多判断内嵌的list的长度来删除分类,在handleRemove函数中进行判断.</li>
+					</ul>				
+				</li>
+			</ol>
+		</p>
+	</body>
+</html>
