@@ -1,7 +1,5 @@
-#《Vue.js实战》之实战练习
-
-##基础篇和进阶篇中的实战
-
+# 《Vue.js实战》之实战练习
+## 基础篇和进阶篇中的实战
 * [5.5 实战：利用计算属性、指令等知识开发购物车](https://loaln.github.io/vue_practice/html/shop.html)、[CSDN博客](https://blog.csdn.net/Corlly/article/details/98975325)
 * 7.7 实战：两个常用组件开发
    - [7.7.1 开发一个数字输入框组件](https://loaln.github.io/vue_practice/html/7-7-1.html)、[CSDN博客](https://blog.csdn.net/Corlly/article/details/99451090)
