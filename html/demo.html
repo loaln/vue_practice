@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title>demo</title>
+		<!--<link rel="stylesheet" href="../css/demo.css" />-->
+	</head>
+
+	<body>
+		<!--作用域插槽-->
+		<h1>作用域插槽</h1>
+		<div id="app">
+			<my-list :books="books">
+				<template slot="book" scope="props">
+					<li>{{props.bookName}}</li>
+				</template>
+			</my-list>
+		</div>
+
+		<!--访问slot，$slots-->
+		<h1>访问slot，$slots</h1>
+		<div id="app1">
+			<child-component>
+				<h2 slot="header">标题</h2>
+				<p>正文内容</p>
+				<p>更多的正文内容</p>
+				<div slot="footer">底部信息</div>
+			</child-component>
+		</div>
+
+		<!--7.5.1 递归组件-->
+		<h1>7.5.1 递归组件</h1>
+		<div id="app2">
+			<child-component-b :count="1"></child-component-b>
+		</div>
+
+		<!--7.5.2 内联模板-->
+		<h1>7.5.2 内联模板</h1>
+		<p>注：此处原书有错误，缺少用props传递父组件的数据message。</p>
+		<div id="app3">
+			<child-component-c inline-template :message="message">
+				<div>
+					<h2>在父组件中定义子组件的模板</h2>
+					<p>{{message}}</p>
+					<p>{{msg}}</p>
+				</div>
+			</child-component-c>
+		</div>
+
+		<!--7.5.3 动态组件-->
+		<h1>7.5.3 动态组件</h1>
+		<div id="app4">
+			<component :is="currentView"></component>
+			<button @click="handleChangeView('A')">切换到A</button>
+			<button @click="handleChangeView('B')">切换到B</button>
+			<button @click="handleChangeView('C')">切换到C</button>
+		</div>
+
+		<!--7.5.4 异步组件-->
+		<h1>7.5.4 异步组件</h1>
+		<div id="app5">
+			<child-component-d></child-component-d>
+		</div>
+		
+		<script type="text/javascript" src="../js/vue.js"></script>
+		<script type="text/javascript" src="../js/demo.js"></script>
+	</body>
+
+</html>

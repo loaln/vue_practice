@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>数字输入框组件</title>
+	</head>
+	<!--入口页-->
+	<body>
+		<h3>需求：</h3>
+		<p>
+			数字输入框只能输入数字，而且有两个快捷键按钮，可以直接减1或加1。除此之外，还可以设置初始值、最大值，
+			在数值改变时，触发一个自定义事件来通知父组件。
+		</p>
+		<h4>操作提示：</h4>
+		<p>
+			1、数值最小为0，最大为100；<br />
+			2、输入框聚焦时，按键盘上下键可对数值进行+1和-1的操作；<br />
+			3、额外设置的两个按钮可进行+10和-10的操作。<br />
+		</p>
+		
+		<div id="app">
+			<!--引入子组件-->
+			<input-number v-model="value" :max="100" :min="0" :step="10"></input-number>
+		</div>
+		
+		<h3>练习1：</h3>
+		<p>在输入框聚焦时，增加对键盘上下键的支持，相当于加1和减1.</p>
+		<h4>思路：</h4>
+		这里倒是很简单，直接在组件模板的input元素中绑定两个键盘事件连接 handleDown 和 handleUp 函数即可。<br />
+		即：@keyup.down="handleDown(1)" 	@keyup.up="handleUp(1)"<br />
+		这里传递参数是因为我的代码是把练习1跟2写在一起，这是为了分增加10步。
+		<h3>练习2：</h3>
+		<p>增加一个控制步伐的prop——step，比如设置为10，点击加号按钮，一次增加10.</p>
+		<h4>思路：</h4>
+		<ol>
+			<li>首先，题目说是要增加prop——step，所以我在父组件中绑定:step="10"，给子组件传递数据；</li>
+			<li>将step写在子组件props中，并在data中增加currentStep，为其赋予父组件step值，这是为了能在子组件模板中方便调用；</li>
+			<li>增设两个按钮操作+-10，绑定 handleDown 和 handleUp 函数</li>
+			<li>修改 handleDown 和 handleUp 函数：为了区分练习1和2，我为其增加参数传递，并稍微修改其内容，保证
+			各种操作后，数据不会小于0或大于100.</li>
+		</ol>
+		
+		<script type="text/javascript" src="../js/vue.js" ></script>
+		<script type="text/javascript" src="../js/7-7-1-input-number.js" ></script>
+		<script type="text/javascript" src="../js/7-7-1-index.js" ></script>
+	</body>
+</html>
